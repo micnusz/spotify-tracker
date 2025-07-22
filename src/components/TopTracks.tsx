@@ -11,17 +11,13 @@ import {
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-interface TopArtistsProps {
-  data: SpotifyApi.UsersTopArtistsResponse | undefined;
+interface TopTracksProps {
+  data: SpotifyApi.UsersTopTracksResponse | undefined;
   isLoading: boolean;
   itemsPerPage?: number;
 }
 
-const TopArtists = ({
-  data,
-  isLoading,
-  itemsPerPage = 12,
-}: TopArtistsProps) => {
+const TopTracks = ({ data, isLoading, itemsPerPage = 12 }: TopTracksProps) => {
   const [api, setApi] = useState<any>();
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -45,7 +41,7 @@ const TopArtists = ({
       ) : (
         <>
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-white">Your Top Artists</h2>
+            <h2 className="text-2xl font-bold text-white">Your Top Tracks</h2>
             <div className="flex gap-2">
               <Button
                 variant="outline"
@@ -71,29 +67,37 @@ const TopArtists = ({
             setApi={setApi}
             opts={{
               align: "start",
-              slidesToScroll: 3, // Zmienione z 4 na 3
+              slidesToScroll: 2,
             }}
             onSelect={updateCurrentSlide}
             className="w-full"
           >
             <CarouselContent>
-              {data?.items.slice(0, itemsPerPage).map((artist) => (
+              {data?.items.slice(0, itemsPerPage).map((track) => (
                 <CarouselItem
-                  key={artist.id}
-                  className="basis-1/3 sm:basis-1/3 lg:basis-1/4"
+                  key={track.id}
+                  className="basis-1/2 sm:basis-1/3 lg:basis-1/4"
                 >
-                  <div className="flex flex-col items-center p-2">
-                    <div className="relative w-full aspect-square mb-3 max-w-[150px]">
+                  <div className="flex flex-col items-center p-2 h-full">
+                    <div className="relative w-full aspect-square mb-3">
                       <Image
-                        src={artist.images[0]?.url || "/placeholder-artist.png"}
-                        alt={artist.name}
+                        src={
+                          track.album.images[0]?.url || "/placeholder-track.png"
+                        }
+                        alt={track.name}
                         fill
-                        className="rounded-full object-cover"
+                        className="rounded-md object-cover"
                       />
                     </div>
-                    <div className="text-center w-full">
-                      <p className="font-medium text-white text-sm line-clamp-1">
-                        {artist.name}
+                    <div className="text-center w-full flex-grow">
+                      <p className="font-medium text-white text-sm line-clamp-2">
+                        {track.name}
+                      </p>
+                      <p className="font-medium text-white text-sm line-clamp-2">
+                        {track.album.name}
+                      </p>
+                      <p className="text-xs text-spotify-light-gray line-clamp-1">
+                        {track.artists.map((artist) => artist.name).join(", ")}
                       </p>
                     </div>
                   </div>
@@ -107,4 +111,4 @@ const TopArtists = ({
   );
 };
 
-export default TopArtists;
+export default TopTracks;

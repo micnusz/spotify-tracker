@@ -1,8 +1,11 @@
 "use client";
 import Spinner from "@/components/Spinner";
 import TopArtists from "@/components/TopArtists";
+import TopTracks from "@/components/TopTracks";
+import UserPlaylists from "@/components/UserPlaylists";
+import { usePlaylists } from "@/hooks/usePlaylists";
 import { useUser } from "@/hooks/useUser";
-import { useUserTopArtists } from "@/hooks/useUserTopItems";
+import { useUserTopArtists, useUserTopTracks } from "@/hooks/useUserTopItems";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
@@ -13,10 +16,21 @@ const DashboardClientPage = () => {
 
   const { data: session, status } = useSession();
   const { data: userData, isLoading: isLoadingUserData, error } = useUser();
-  const { data: topData, isLoading: isLoadingTopData } = useUserTopArtists({
-    offset: page * limit,
-    limit,
-  });
+  const { data: topArtistData, isLoading: isLoadingTopArtistData } =
+    useUserTopArtists({
+      offset: page * limit,
+      limit,
+    });
+  const { data: topTracksData, isLoading: isLoadingTopTracksData } =
+    useUserTopTracks({
+      offset: page * limit,
+      limit,
+    });
+  const { data: userPlaylistsData, isLoading: isLoadingUserPlaylistsData } =
+    usePlaylists({
+      offset: page * limit,
+      limit,
+    });
 
   if (status === "loading" || isLoadingUserData) {
     return <Spinner />;
@@ -72,12 +86,28 @@ const DashboardClientPage = () => {
       </div>
 
       {/* Dolna sekcja - top artyści */}
-      <div className="mt-8">
-        <TopArtists
-          data={topData}
-          isLoading={isLoadingTopData}
-          itemsPerPage={12}
-        />
+      <div className="flex flex-col gap-y-18">
+        <div>
+          <TopArtists
+            data={topArtistData}
+            isLoading={isLoadingTopArtistData}
+            itemsPerPage={12}
+          />
+        </div>
+        <div>
+          <TopTracks
+            data={topTracksData}
+            isLoading={isLoadingTopTracksData}
+            itemsPerPage={12}
+          />
+        </div>
+        <div>
+          <UserPlaylists
+            data={userPlaylistsData}
+            isLoading={isLoadingUserPlaylistsData}
+            itemsPerPage={12}
+          />
+        </div>
       </div>
     </div>
   );

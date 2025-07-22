@@ -9,7 +9,13 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Lock } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Badge } from "./ui/badge";
 
 interface UserPlaylistsProps {
   data: SpotifyApi.UsersPlaylistsResponse | undefined;
@@ -81,8 +87,8 @@ const UserPlaylists = ({
                   key={playlist.id}
                   className="basis-1/2 sm:basis-1/3 lg:basis-1/4"
                 >
-                  <div className="flex flex-col items-center p-2 h-full group">
-                    <div className="relative w-full aspect-square mb-3 overflow-hidden">
+                  <div className="flex flex-col items-center p-2 h-full group p-3">
+                    <div className="relative w-full aspect-square mb-3 ">
                       <Image
                         src={
                           playlist.images[0]?.url || "/placeholder-playlist.png"
@@ -91,9 +97,11 @@ const UserPlaylists = ({
                         fill
                         className="rounded-md object-cover group-hover:scale-105 transition-transform"
                       />
-                      <div className="absolute bottom-2 right-2 bg-spotify-green rounded-full p-1">
+                      <div className="absolute bottom-2 right-2 p-1">
                         <span className="text-xs font-bold text-black">
-                          {playlist.tracks.total} tracks
+                          <Badge variant="default">
+                            {playlist.tracks.total} tracks
+                          </Badge>
                         </span>
                       </div>
                     </div>
@@ -101,9 +109,22 @@ const UserPlaylists = ({
                       <p className="font-medium text-white text-sm line-clamp-1">
                         {playlist.name}
                       </p>
-                      <p className="text-xs text-spotify-light-gray line-clamp-1">
-                        {playlist.owner.display_name}
-                      </p>
+                      <div className="flex flex-row items-center justify-center gap-x-1">
+                        <p className="text-xs text-spotify-light-gray line-clamp-1">
+                          {playlist.owner.display_name}
+                        </p>
+
+                        {playlist.public && (
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <Lock className="w-3.5 h-3.5 text-muted-foreground" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>This playlist is private.</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        )}
+                      </div>
                       {playlist.description && (
                         <p className="text-xs text-spotify-light-gray mt-1 line-clamp-2">
                           {playlist.description}

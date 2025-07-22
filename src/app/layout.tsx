@@ -4,6 +4,7 @@ import "./globals.css";
 import QueryProvider from "@/lib/QueryProvider";
 import { SessionProvider } from "next-auth/react";
 import Providers from "@/lib/Providers";
+import Header from "@/components/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +31,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
       </body>
     </html>
   );

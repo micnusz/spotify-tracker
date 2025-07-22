@@ -9,6 +9,7 @@ import { useUserTopArtists, useUserTopTracks } from "@/hooks/useUserTopItems";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
+import formatProductName from "../modules/format-product";
 
 const DashboardClientPage = () => {
   const [page, setPage] = useState(0);
@@ -77,16 +78,18 @@ const DashboardClientPage = () => {
           </h1>
           {userData?.profile.product ? (
             <div className="text-muted-foreground mt-2">
-              <p className="text-chart-3">{userData.profile.product}</p>
+              <p className="text-chart-3">
+                {formatProductName(userData.profile.product)}
+              </p>
             </div>
           ) : (
-            <p className="text-muted-foreground">No data available</p>
+            <p className="text-muted-foreground">No data available.</p>
           )}
         </div>
       </div>
 
       {/* Dolna sekcja - top artyści */}
-      <div className="flex flex-col gap-y-18">
+      <div className="flex flex-col gap-y-12">
         <div>
           <TopArtists
             data={topArtistData}

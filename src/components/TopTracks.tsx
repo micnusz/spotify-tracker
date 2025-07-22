@@ -78,7 +78,7 @@ const TopTracks = ({ data, isLoading, itemsPerPage = 12 }: TopTracksProps) => {
                   key={track.id}
                   className="basis-1/2 sm:basis-1/3 lg:basis-1/4"
                 >
-                  <div className="flex flex-col items-center p-2 h-full">
+                  <div className="flex flex-col items-center p-2 h-full group p-3">
                     <div className="relative w-full aspect-square mb-3">
                       <Image
                         src={
@@ -86,7 +86,7 @@ const TopTracks = ({ data, isLoading, itemsPerPage = 12 }: TopTracksProps) => {
                         }
                         alt={track.name}
                         fill
-                        className="rounded-md object-cover"
+                        className="rounded-md object-cover group-hover:scale-105 transition-transform"
                       />
                     </div>
                     <div className="text-center w-full flex-grow">

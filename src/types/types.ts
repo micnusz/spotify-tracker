@@ -27,6 +27,20 @@ export type Artist = {
   images: SpotifyImage[];
 };
 
+export type UserTopArtists = {
+  type: "artists";
+  time_range: string;
+  limit: number;
+  offset: number;
+};
+
+export type UserTopTracks = {
+  type: "tracks";
+  time_range: string;
+  limit: number;
+  offset: number;
+};
+
 export type User = {
   country: string;
   display_name: string;

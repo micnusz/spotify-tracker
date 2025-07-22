@@ -1,9 +1,9 @@
-import { User } from "@/types/types";
+import { User, UserTopArtists } from "@/types/types";
 import { useQuery } from "@tanstack/react-query";
 
 interface UserResponse {
   profile: User;
-  topArtists: SpotifyApi.UsersTopArtistsResponse; // lub własny typ
+  topArtists: UserTopArtists;
 }
 
 export async function fetchUser(): Promise<UserResponse> {

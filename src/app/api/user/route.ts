@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
-import { User } from "@/types/types";
 import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function GET(request: NextRequest) {
-  // Pobierz sesję użytkownika
   const session = await getServerSession(authOptions);
 
   if (!session || !session.accessToken) {
@@ -13,21 +11,30 @@ export async function GET(request: NextRequest) {
 
   const accessToken = session.accessToken;
 
-  // Zapytanie do Spotify o dane zalogowanego użytkownika
-  const res = await fetch("https://api.spotify.com/v1/me", {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  // Równoległe pobieranie danych
+  const [profileRes, topArtistsRes] = await Promise.all([
+    fetch("https://api.spotify.com/v1/me", {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    }),
+    fetch("https://api.spotify.com/v1/me/top/artists", {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    }),
+  ]);
 
-  if (!res.ok) {
+  if (!profileRes.ok || !topArtistsRes.ok) {
     return NextResponse.json(
-      { error: "Failed to fetch user data from Spotify" },
-      { status: res.status }
+      { error: "Failed to fetch data from Spotify" },
+      { status: profileRes.status }
     );
   }
 
-  const data: User = await res.json();
+  const [profile, topArtists] = await Promise.all([
+    profileRes.json(),
+    topArtistsRes.json(),
+  ]);
 
-  return NextResponse.json(data);
+  return NextResponse.json({
+    profile,
+    topArtists,
+  });
 }

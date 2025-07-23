@@ -7,6 +7,7 @@ export const authOptions: NextAuthOptions = {
     SpotifyProvider({
       clientId: process.env.SPOTIFY_CLIENT_ID!,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET!,
+
       authorization: {
         params: {
           scope: [
@@ -15,11 +16,13 @@ export const authOptions: NextAuthOptions = {
             "user-top-read",
             "user-read-recently-played",
           ].join(" "),
-          show_dialog: true, // Pomocne przy debugowaniu
+          redirect_uri: "http://127.0.0.1:3000/api/auth/callback/spotify",
+          show_dialog: true,
         },
       },
     }),
   ],
+
   callbacks: {
     async jwt({ token, account }) {
       // Początkowe logowanie
@@ -36,8 +39,6 @@ export const authOptions: NextAuthOptions = {
       if (token.expiresAt && Date.now() < token.expiresAt) {
         return token;
       }
-
-      // Implementacja odświeżania tokenu
       try {
         const response = await fetch("https://accounts.spotify.com/api/token", {
           method: "POST",
@@ -73,7 +74,15 @@ export const authOptions: NextAuthOptions = {
       session.error = token.error;
       return session;
     },
+    async redirect({ url, baseUrl }) {
+      // Przekieruj na /dashboard po logowaniu
+      if (url === baseUrl || url === `${baseUrl}/`) {
+        return `${baseUrl}/dashboard`;
+      }
+      return url;
+    },
   },
+
   pages: {
     signIn: "/api/auth/signin",
     error: "/api/auth/error",

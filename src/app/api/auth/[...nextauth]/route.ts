@@ -25,7 +25,6 @@ export const authOptions: NextAuthOptions = {
 
   callbacks: {
     async jwt({ token, account }) {
-      // Początkowe logowanie
       if (account) {
         return {
           accessToken: account.access_token,
@@ -75,7 +74,6 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
-      // Przekieruj na /dashboard po logowaniu
       if (url === baseUrl || url === `${baseUrl}/`) {
         return `${baseUrl}/dashboard`;
       }
@@ -84,8 +82,8 @@ export const authOptions: NextAuthOptions = {
   },
 
   pages: {
-    signIn: "/api/auth/signin",
-    error: "/api/auth/error",
+    signIn: "/signin",
+    error: "/auth/error",
   },
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === "development",

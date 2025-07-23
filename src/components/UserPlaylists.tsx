@@ -95,7 +95,7 @@ const UserPlaylists = ({
                         }
                         alt={playlist.name}
                         fill
-                        className="rounded-md object-cover group-hover:scale-105 transition-transform"
+                        className="rounded-md object-cover group-hover:scale-104 transition duration-200 ease-in-out shadow-xl/10"
                       />
                       <div className="absolute bottom-2 right-2 p-1">
                         <span className="text-xs font-bold text-black">
@@ -114,7 +114,7 @@ const UserPlaylists = ({
                           {playlist.owner.display_name}
                         </p>
 
-                        {playlist.public && (
+                        {!playlist.public && (
                           <Tooltip>
                             <TooltipTrigger>
                               <Lock className="w-3.5 h-3.5 text-muted-foreground" />

@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { signOut } from "next-auth/react";
 
 const Header = () => {
   return (
@@ -64,9 +65,9 @@ const Header = () => {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="text-destructive focus:text-destructive">
-                  <Link href="/logout" className="text-xl">
-                    Log out
-                  </Link>
+                  <Button onClick={() => signOut({ callbackUrl: "/" })}>
+                    Log Out
+                  </Button>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

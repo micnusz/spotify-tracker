@@ -60,7 +60,7 @@ const DashboardClientPage = () => {
                 src={userData.profile.images[0].url}
                 alt="User profile image"
                 fill
-                className="rounded-full object-cover border-2 border-primary"
+                className="rounded-full object-cover border-2 border-primary shadow-xl/10"
               />
             </div>
           ) : (

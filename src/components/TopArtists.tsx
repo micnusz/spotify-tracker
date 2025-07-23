@@ -83,12 +83,12 @@ const TopArtists = ({
                   className="basis-1/3 sm:basis-1/3 lg:basis-1/4"
                 >
                   <div className="flex flex-col items-center p-2">
-                    <div className="relative w-full aspect-square mb-3 max-w-[150px]">
+                    <div className="relative w-full aspect-square mb-3 max-w-[150px]  group">
                       <Image
                         src={artist.images[0]?.url || "/placeholder-artist.png"}
                         alt={artist.name}
                         fill
-                        className="rounded-full object-cover"
+                        className="rounded-full object-cover shadow-xl/10  group-hover:scale-105 transition duration-200 ease-in-out"
                       />
                     </div>
                     <div className="text-center w-full">

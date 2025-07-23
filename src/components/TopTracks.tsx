@@ -78,7 +78,7 @@ const TopTracks = ({ data, isLoading, itemsPerPage = 12 }: TopTracksProps) => {
                   key={track.id}
                   className="basis-1/2 sm:basis-1/3 lg:basis-1/4"
                 >
-                  <div className="flex flex-col items-center p-2 h-full group p-3">
+                  <div className="flex flex-col items-center p-2 h-full group p-3 ">
                     <div className="relative w-full aspect-square mb-3">
                       <Image
                         src={
@@ -86,14 +86,14 @@ const TopTracks = ({ data, isLoading, itemsPerPage = 12 }: TopTracksProps) => {
                         }
                         alt={track.name}
                         fill
-                        className="rounded-md object-cover group-hover:scale-105 transition-transform"
+                        className="rounded-md object-cover group-hover:scale-104 transition duration-200 ease-in-out shadow-xl/10"
                       />
                     </div>
-                    <div className="text-center w-full flex-grow">
-                      <p className="font-medium text-white text-sm line-clamp-2">
+                    <div className="text-center w-full flex-grow ">
+                      <p className="font-semibold text-white text-sm line-clamp-2 ">
                         {track.name}
                       </p>
-                      <p className="font-medium text-white text-sm line-clamp-2">
+                      <p className=" text-spotify-light-gray text-xs line-clamp-1">
                         {track.album.name}
                       </p>
                       <p className="text-xs text-spotify-light-gray line-clamp-1">

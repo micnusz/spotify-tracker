@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import TrackPreviewDialog from "./TrackPreviewDialog";
 
 interface TopTracksProps {
   data: SpotifyApi.UsersTopTracksResponse | undefined;
@@ -80,14 +81,17 @@ const TopTracks = ({ data, isLoading, itemsPerPage = 12 }: TopTracksProps) => {
                 >
                   <div className="flex flex-col items-center p-2 h-full group p-3 ">
                     <div className="relative w-full aspect-square mb-3">
-                      <Image
-                        src={
-                          track.album.images[0]?.url || "/placeholder-track.png"
-                        }
-                        alt={track.name}
-                        fill
-                        className="rounded-md object-cover group-hover:scale-104 transition duration-200 ease-in-out shadow-xl/10"
-                      />
+                      <TrackPreviewDialog data={track}>
+                        <Image
+                          src={
+                            track.album.images[0]?.url ||
+                            "/placeholder-track.png"
+                          }
+                          alt={track.name}
+                          fill
+                          className="rounded-md object-cover group-hover:scale-104 transition duration-200 ease-in-out shadow-xl/10"
+                        />
+                      </TrackPreviewDialog>
                     </div>
                     <div className="text-center w-full flex-grow ">
                       <p className="font-semibold text-white text-sm line-clamp-2 ">

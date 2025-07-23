@@ -71,9 +71,9 @@
   --accent-foreground: oklch(0.95 0.00 0);
 
   /* Kolory informacyjne */
-  --muted: oklch(0.206 0.003 270);         /* Stonowany szary */
-  --muted-foreground: oklch(0.6 0.01 270);
-  --destructive: oklch(0.6 0.1 20);    /* Ceglasty czerwony */
+  --muted: oklch(0.206 0.003 270);         
+  --muted-foreground: oklch(0.75 0.00 0);
+  --destructive: oklch(0.6 0.1 20); 
 
   /* Obramowania i pierścienie */
   --border: oklch(0.2395 0.005 270);
